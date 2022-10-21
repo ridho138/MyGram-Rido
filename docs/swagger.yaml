@@ -1,0 +1,610 @@
+basePath: /
+definitions:
+  models.Comment:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      photoId:
+        type: integer
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+  models.CommentResult:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      photo:
+        $ref: '#/definitions/models.Photo'
+      photoId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.DataUserUpdate'
+      userId:
+        type: integer
+    type: object
+  models.DataCommentReq:
+    properties:
+      message:
+        type: string
+      photoId:
+        type: integer
+    required:
+    - message
+    type: object
+  models.DataPhotoReq:
+    properties:
+      caption:
+        type: string
+      photoUrl:
+        type: string
+      title:
+        type: string
+    required:
+    - photoUrl
+    - title
+    type: object
+  models.DataSocMedReq:
+    properties:
+      name:
+        type: string
+      socialMediaUrl:
+        type: string
+    required:
+    - name
+    - socialMediaUrl
+    type: object
+  models.DataUserLoginReq:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.DataUserReq:
+    properties:
+      age:
+        minimum: 9
+        type: integer
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - age
+    - email
+    - password
+    - username
+    type: object
+  models.DataUserUpdate:
+    properties:
+      email:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - username
+    type: object
+  models.Photo:
+    properties:
+      caption:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      photoUrl:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+  models.PhotoResult:
+    properties:
+      caption:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      photoUrl:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.DataUserUpdate'
+      userId:
+        type: integer
+    type: object
+  models.SocialMedia:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      socialMediaUrl:
+        type: string
+      userId:
+        type: integer
+    type: object
+  models.SocmedResult:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      socialMediaUrl:
+        type: string
+      user:
+        $ref: '#/definitions/models.DataUserUpdate'
+      userId:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      age:
+        type: integer
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+  views.SwaggerCommentAdd:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        $ref: '#/definitions/models.Comment'
+      status:
+        type: string
+    type: object
+  views.SwaggerCommentGet:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/models.CommentResult'
+        type: array
+      status:
+        type: string
+    type: object
+  views.SwaggerPhotoAdd:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        $ref: '#/definitions/models.Photo'
+      status:
+        type: string
+    type: object
+  views.SwaggerPhotoGet:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/models.PhotoResult'
+        type: array
+      status:
+        type: string
+    type: object
+  views.SwaggerResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  views.SwaggerSocmedAdd:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        $ref: '#/definitions/models.SocialMedia'
+      status:
+        type: string
+    type: object
+  views.SwaggerSocmedGet:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/models.SocmedResult'
+        type: array
+      status:
+        type: string
+    type: object
+  views.SwaggerUserLogin:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      status:
+        type: string
+      token:
+        type: string
+    type: object
+  views.SwaggerUserRegister:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      payload:
+        $ref: '#/definitions/models.User'
+      status:
+        type: string
+    type: object
+host: localhost:4000
+info:
+  contact:
+    email: teguh.afdilla138@gmail.com
+    name: Teguh Ridho Afdilla
+  description: Share and comment ur photo
+  termsOfService: http://swagger.io/terms/
+  title: MyGram API
+  version: v1.0
+paths:
+  /comments:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerCommentGet'
+      summary: get comment
+      tags:
+      - Comment
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add New comment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataCommentReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerCommentAdd'
+      summary: Add new comment
+      tags:
+      - Comment
+  /comments/{commentId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Comment ID
+        in: path
+        name: commentId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerResponse'
+      summary: Delete comment
+      tags:
+      - Comment
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Comment ID
+        in: path
+        name: commentId
+        required: true
+        type: integer
+      - description: Update comment
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataCommentReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerCommentAdd'
+      summary: Update comment
+      tags:
+      - Comment
+  /photos:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerPhotoGet'
+      summary: Get all photo
+      tags:
+      - Photo
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add New Photo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataPhotoReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerPhotoAdd'
+      summary: Add new photo
+      tags:
+      - Photo
+  /photos/{photoId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Photo ID
+        in: path
+        name: photoId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerResponse'
+      summary: Update photo
+      tags:
+      - Photo
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Photo ID
+        in: path
+        name: photoId
+        required: true
+        type: integer
+      - description: Update Photo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataPhotoReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerPhotoAdd'
+      summary: Update photo
+      tags:
+      - Photo
+  /socialmedias:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerSocmedGet'
+      summary: Get social media
+      tags:
+      - SocialMedia
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add New social media
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataSocMedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerSocmedAdd'
+      summary: Add new social media
+      tags:
+      - SocialMedia
+  /socialmedias/{socmedId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Social Media ID
+        in: path
+        name: socmedId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerResponse'
+      summary: Delete social media
+      tags:
+      - SocialMedia
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Social Media ID
+        in: path
+        name: socmedId
+        required: true
+        type: integer
+      - description: Update social media
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataSocMedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerSocmedAdd'
+      summary: Update social media
+      tags:
+      - SocialMedia
+  /users:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerResponse'
+      summary: User Delete
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Update
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataUserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerUserRegister'
+      summary: User Update
+      tags:
+      - User
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Login
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataUserLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerUserLogin'
+      summary: User Login
+      tags:
+      - User
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add New User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.DataUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.SwaggerUserRegister'
+      summary: Add new user
+      tags:
+      - User
+swagger: "2.0"
